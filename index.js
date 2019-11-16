@@ -34,6 +34,7 @@ const upload = multer({
       return cb(null,true);
     } else {
       cb('Error: Images Only!');
+      console.log("Images Only");
     }
   }
   
@@ -56,11 +57,14 @@ app.post('/upload', (req, res) => {
     upload(req, res, (err) => {
       if(err){
         res.send("Error");
+        console.log("Error");
       } else {
         if(req.file == undefined){
           res.send('Error');
+          console.log("Error");
         } else {
           res.send('Success');
+          console.log("Success");
         }
       }
     });
