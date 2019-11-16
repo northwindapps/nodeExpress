@@ -57,14 +57,14 @@ app.post('/upload', (req, res) => {
     upload(req, res, (err) => {
       if(err){
         res.send("Error");
-        console.log("Error");
+        console.log("err");
       } else {
         if(req.file == undefined){
           res.send('Error');
-          console.log("Error");
+          console.log("undefined Error");
         } else {
-          res.send('Success');
-          console.log("Success");
+          res.send(res);
+          console.log(res);
         }
       }
     });
