@@ -63,8 +63,7 @@ app.post('/upload', (req, res) => {
           res.send('Error');
           console.log("undefined Error");
         } else {
-          res.send(res);
-          console.log(res);
+          res.send('OK??');
         }
       }
     });
