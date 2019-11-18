@@ -17,9 +17,23 @@ const aws = require('aws-sdk');
  */
 const app = express();
 // app.set('views', './views');
-// app.use(express.static('./public'));
+app.use(express.static('./public'));
 // app.engine('html', require('ejs').renderFile);
+
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+    next();
+});
+
+
 app.listen(process.env.PORT || 3000);
+
+app.get('/', (req,res)=> {res.send("You have got promoted.")
+});
 
 /*
  * Configure the AWS region of the target bucket.
@@ -49,9 +63,9 @@ app.get('/sign-s3', (req, res) => {
   const fileType = req.query['file-type'];
   const s3Params = {
     Bucket: S3_BUCKET,
-    Key: fileName,
+    Key: 'meg.jpg',
     Expires: 60,
-    ContentType: fileType,
+    ContentType: 'jpg',
     ACL: 'public-read'
   };
 
