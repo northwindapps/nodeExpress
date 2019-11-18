@@ -1,6 +1,8 @@
 /*
  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
  http://www.apache.org/licenses/LICENSE-2.0
+
  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 */
 
@@ -16,24 +18,10 @@ const aws = require('aws-sdk');
  * Set-up and run the Express app.
  */
 const app = express();
-// app.set('views', './views');
+app.set('views', './views');
 app.use(express.static('./public'));
-// app.engine('html', require('ejs').renderFile);
-
-
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", '*');
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-    next();
-});
-
-
+app.engine('html', require('ejs').renderFile);
 app.listen(process.env.PORT || 3000);
-
-app.get('/', (req,res)=> {res.send("You have got promoted.")
-});
 
 /*
  * Configure the AWS region of the target bucket.
@@ -50,7 +38,7 @@ const S3_BUCKET = process.env.S3_BUCKET;
  * Respond to GET requests to /account.
  * Upon request, render the 'account.html' web page in views/ directory.
  */
-// app.get('/account', (req, res) => res.render('account.html'));
+app.get('/account', (req, res) => res.render('account.html'));
 
 /*
  * Respond to GET requests to /sign-s3.
@@ -63,9 +51,9 @@ app.get('/sign-s3', (req, res) => {
   const fileType = req.query['file-type'];
   const s3Params = {
     Bucket: S3_BUCKET,
-    Key: 'meg.jpg',
+    Key: fileName,
     Expires: 60,
-    ContentType: 'jpg',
+    ContentType: fileType,
     ACL: 'public-read'
   };
 
